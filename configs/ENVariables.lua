@@ -8,14 +8,13 @@
 --       directly, so I pre-join commas → colons below.
 ---@diagnostic disable: undefined-global
 
-
 -- Current Version of JakooLit Dotfiles
 hl.env("DOTS_VERSION", "2.3.20")
 
 -- /* ---- 🧰 Toolkit Backend Variables 🧰 */
-hl.env("GDK_BACKEND",      "wayland:x11:*")
-hl.env("QT_QPA_PLATFORM",  "wayland;xcb")
-hl.env("CLUTTER_BACKEND",  "wayland")
+hl.env("GDK_BACKEND", "wayland,x11,*")
+hl.env("QT_QPA_PLATFORM", "wayland,xcb")
+hl.env("CLUTTER_BACKEND", "wayland")
 
 -- Run SDL2 applications on Wayland.
 -- Remove or set to x11 if games that provide older versions of SDL cause compatibility issues
@@ -24,34 +23,34 @@ hl.env("CLUTTER_BACKEND",  "wayland")
 -- /* ---- 📁 XDG Specifications 📁 */
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-hl.env("XDG_SESSION_TYPE",    "wayland")
+hl.env("XDG_SESSION_TYPE", "wayland")
 
 -- /* ---- 🪟 QT Variables 🪟 */
-hl.env("QT_AUTO_SCREEN_SCALE_FACTOR",         "1")
+hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-hl.env("QT_QPA_PLATFORMTHEME",                "qt5ct")
-hl.env("QT_QPA_PLATFORMTHEME",                "qt6ct")   -- second assignment wins, kept for parity
+hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct") -- second assignment wins, kept for parity
 
 -- /* ---- 🎨 hyprland-qt-support 🎨 */
 hl.env("QT_QUICK_CONTROLS_STYLE", "org.hyprland.style")
 
 -- /* ---- 🖥️ xwayland apps scale fix (matches Monitors.conf scaling) 🖥️ */
 -- 1 is 100%, 1.5 is 150% — see https://wiki.hyprland.org/Configuring/XWayland/
-hl.env("GDK_SCALE",       "1")
+hl.env("GDK_SCALE", "1")
 hl.env("QT_SCALE_FACTOR", "1")
 
 -- /* ---- 🖱️ Bibata-Modern-Ice-Cursor 🖱️ */
 -- NOTE: requires the hyprcursor version of the theme.
 -- https://wiki.hyprland.org/Hypr-Ecosystem/hyprcursor/
 hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Ice")
-hl.env("HYPRCURSOR_SIZE",  "24")
+hl.env("HYPRCURSOR_SIZE", "24")
 
 -- /* ---- 🦊 firefox 🦊 */
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 
 -- /* ---- ⚛️ Electron >28 apps (may help) ⚛️ */
 -- https://www.electronjs.org/docs/latest/api/environment-variables
-hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")  -- auto-selects Wayland if possible, X11 otherwise
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto") -- auto-selects Wayland if possible, X11 otherwise
 
 -- /* ---- 🟢 NVIDIA — from Hyprland Wiki 🟢 ---- */
 -- See https://wiki.hyprland.org/Nvidia/#environment-variables

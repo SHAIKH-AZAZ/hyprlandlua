@@ -5,4 +5,4 @@
 -- on its own and in the exact shape they write.
 ---@diagnostic disable: undefined-global
 
--- hl.monitor({ output = "eDP-1", mode = "preferred", position = "auto", scale = 1 })
+hl.monitor({ output = "eDP-1", mode = "preferred", position = "auto", scale = 1 })

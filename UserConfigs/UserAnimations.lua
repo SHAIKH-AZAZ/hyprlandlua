@@ -1,9 +1,10 @@
 -- /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
 -- Animations - https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
 --
--- NOTE: scripts/Animations.sh copies presets from animations/*.conf over
--- UserAnimations.conf, which the Lua config no longer reads. Port a preset by
--- hand, or run the picker and translate the result into the tables below.
+-- NOTE: the animation picker (SUPER SHIFT A, scripts/Animations.sh) overwrites
+-- this file with a preset from animations/*.conf, converted to Lua by
+-- scripts/AnimConfToLua.awk. Hand edits survive until the next pick, and the
+-- file it replaces is kept as UserAnimations.lua.bak.
 ---@diagnostic disable: undefined-global
 
 hl.config({

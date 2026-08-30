@@ -25,6 +25,7 @@ require("configs.SystemSettings")
 -- User Overrides
 ------------------------------------------------------------
 
+require("UserConfigs.Hypridle") -- emits ~/.config/hypr/hypridle.conf
 require("UserConfigs.Startup_Apps")
 require("UserConfigs.ENVariables")
 require("UserConfigs.Laptops")
@@ -63,3 +64,6 @@ require("workspaces")
 -- require("configs.Decorations")
 -- require("configs.Animations")
 -- require("configs.Misc")
+
+-- HyprMod managed settings
+require("hyprland-gui")

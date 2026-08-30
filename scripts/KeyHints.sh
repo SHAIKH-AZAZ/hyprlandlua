@@ -42,11 +42,11 @@ GDK_BACKEND=$BACKEND yad \
 " W" "Choose wallpaper" "(Wallpaper Menu)" \
 " Shift W" "Choose wallpaper effects" "(imagemagick + awww)" \
 "CTRL ALT W" "Random wallpaper" "(via awww)" \
-" CTRL ALT B" "Hide/UnHide Waybar" "waybar" \
-" CTRL B" "Choose waybar styles" "(waybar styles)" \
-" ALT B" "Choose waybar layout" "(waybar layout)" \
-" ALT R" "Reload Waybar swaync Rofi" "CHECK NOTIFICATION FIRST!!!" \
-" SHIFT N" "Launch Notification Panel" "swaync Notification Center" \
+" CTRL ALT B" "Hide/UnHide bar" "(wayle panel toggle)" \
+" CTRL B" "Bar settings" "(wayle panel settings)" \
+" ALT B" "Reload bar" "(wayle panel restart)" \
+" ALT R" "Reload wayle + Rofi" "CHECK NOTIFICATION FIRST!!!" \
+" SHIFT N" "Toggle Do-Not-Disturb" "(wayle notify dnd)" \
 " Print" "screenshot" "(grim)" \
 " Shift Print" "screenshot region" "(grim + slurp)" \
 " Shift S" "screenshot region" "(swappy)" \

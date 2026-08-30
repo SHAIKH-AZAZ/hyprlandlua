@@ -27,7 +27,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("swaync")
 	-- hl.exec_cmd("ags")
 	-- hl.exec_cmd("rog-control-center")
-	hl.exec_cmd("waybar")
+	hl.exec_cmd("wayle panel start")
 	hl.exec_cmd("qs -c overview") -- Quickshell Overview
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd(scriptsDir .. "/Hyprsunset.sh init")

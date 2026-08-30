@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 
-# Modified version of Refresh.sh but waybar wont refresh
+# Modified version of Refresh.sh but the bar (wayle) wont refresh
 # Used by automatic wallpaper change
-# Modified inorder to refresh rofi background, Wallust, SwayNC only
+# Modified inorder to refresh rofi background and Wallust only
 
 SCRIPTSDIR=$HOME/.config/hypr/scripts
 UserScripts=$HOME/.config/hypr/UserScripts
@@ -34,9 +34,6 @@ pkill qs && qs &
 # Wallust refresh (synchronous to ensure colors are ready)
 ${SCRIPTSDIR}/WallustSwww.sh
 sleep 0.2
-
-# reload swaync
-swaync-client --reload-config
 
 # Relaunching rainbow borders if the script exists
 sleep 1

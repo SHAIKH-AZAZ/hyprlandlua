@@ -6,12 +6,12 @@ notif="$HOME/.config/swaync/images"
 
 STATE=$(hyprctl -j getoption decoration:blur:passes | jq ".int")
 
-if [ "${STATE}" == "3" ]; then
-	hyprctl keyword decoration:blur:size 2
-	hyprctl keyword decoration:blur:passes 1
+if [ "${STATE}" -gt 1 ]; then
+	# ponytail: `hyprctl keyword` is a no-op under the Lua configProvider, must use eval
+	hyprctl eval 'hl.config({ decoration = { blur = { size = 2, passes = 1 } } })'
  	notify-send -e -u low -i "$notif/note.png" " Less Blur"
 else
-	hyprctl keyword decoration:blur:size 5
-	hyprctl keyword decoration:blur:passes 3
+	# reload restores whatever UserDecorations.lua sets, no hardcoded values to drift
+	hyprctl reload
   	notify-send -e -u low -i "$notif/ja.png" " Normal Blur"
 fi

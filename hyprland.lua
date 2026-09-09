@@ -53,6 +53,7 @@ require("workspaces")
 -- Enable once installed and ABI matches.
 
 -- require("plugins.scrolloverview")
+require("plugins.scrolloverview")
 
 ------------------------------------------------------------
 -- Optional Extras

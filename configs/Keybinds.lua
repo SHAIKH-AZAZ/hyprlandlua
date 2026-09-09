@@ -47,7 +47,8 @@ bind(mainMod .. " + D", exec("pkill rofi || true && rofi -show drun -modi drun,f
 
 bind(mainMod .. " + B", exec([[xdg-open "https://"]]), "open default browser")
 
-bind(mainMod .. " + A", exec(scriptsDir .. "/OverviewToggle.sh"), "desktop overview")
+-- SUPER + A now opens the hyprexpo overview (plugins/scrolloverview.lua).
+-- bind(mainMod .. " + A", exec(scriptsDir .. "/OverviewToggle.sh"), "desktop overview")
 
 -- AGS overview alternative:
 -- bind(mainMod .. " + A",
@@ -143,7 +144,7 @@ bind(
 
 bind(mainMod .. " + CTRL + ALT + B", exec("wayle panel toggle"), "toggle waybar on/off")
 
-bind(mainMod .. " + CTRL + B", exec(scriptsDir .. "/WaybarStyles.sh"), "waybar styles menu")
+bind(mainMod .. " + CTRL + B", exec("wayle panel settings"), "waybar styles menu")
 
 bind(mainMod .. " + ALT + B", exec(scriptsDir .. "/WaybarLayout.sh"), "waybar layout menu")
 
@@ -230,15 +231,41 @@ bind(mainMod .. " + SHIFT + E", exec(scriptsDir .. "/Kool_Quick_Settings.sh"), "
 -- Master layout
 ------------------------------------------------------------
 
-bind(mainMod .. " + CTRL + D", hl.dsp.layout("removemaster"), "remove master")
+-- Master-only layoutmsgs (addmaster/removemaster/swapwithmaster/cycleprev) raise
+-- "Unknown dwindle layoutmsg" when the active layout is dwindle. hyprctl keyword is
+-- rejected under the lua parser, so ChangeLayout.sh cannot rebind these per layout;
+-- instead each bind picks its dispatcher at press time.
+local function is_master()
+	return hl.get_config("general:layout") == "master"
+end
 
-bind(mainMod .. " + I", hl.dsp.layout("addmaster"), "add master")
+-- master_msg under master, dwindle_msg under dwindle (nil dwindle_msg = no-op).
+local function layoutmsg(master_msg, dwindle_msg)
+	return function()
+		local msg = is_master() and master_msg or dwindle_msg
+		if msg then
+			hl.dispatch(hl.dsp.layout(msg))
+		end
+	end
+end
 
--- J/K bindings are set dynamically by KeybindsLayoutInit.sh and ChangeLayout.sh.
--- bind(mainMod .. " + J", hl.dsp.layout("cyclenext"), "cycle next")
--- bind(mainMod .. " + K", hl.dsp.layout("cycleprev"), "cycle previous")
+-- Master cycles through the layout; dwindle has no cycle layoutmsg, so use the
+-- global window cycler there.
+local function cycle(prev)
+	return function()
+		if is_master() then
+			hl.dispatch(hl.dsp.layout(prev and "cycleprev" or "cyclenext"))
+		else
+			hl.dispatch(hl.dsp.window.cycle_next({ prev = prev }))
+		end
+	end
+end
 
-bind(mainMod .. " + CTRL + Return", hl.dsp.layout("swapwithmaster"), "swap with master")
+bind(mainMod .. " + CTRL + D", layoutmsg("removemaster"), "remove master")
+bind(mainMod .. " + I", layoutmsg("addmaster"), "add master")
+bind(mainMod .. " + J", cycle(false), "cycle next")
+bind(mainMod .. " + K", cycle(true), "cycle previous")
+bind(mainMod .. " + CTRL + Return", layoutmsg("swapwithmaster", "swapsplit"), "swap window")
 
 ------------------------------------------------------------
 -- Dwindle layout
@@ -420,8 +447,7 @@ bind(
 	"move to special workspace"
 )
 
--- Use the command form for the unnamed special workspace.
-bind(mainMod .. " + U", exec("hyprctl dispatch togglespecialworkspace"), "toggle special workspace")
+bind(mainMod .. " + U", hl.dsp.workspace.toggle_special(), "toggle special workspace")
 
 ------------------------------------------------------------
 -- Numbered workspaces, using keycodes

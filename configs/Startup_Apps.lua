@@ -22,8 +22,9 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd(scriptsDir .. "/Dropterminal.sh kitty &")
 	hl.exec_cmd(scriptsDir .. "/Polkit.sh")
-	hl.exec_cmd("nm-applet --indicator")
-	hl.exec_cmd("nm-tray") -- For ubuntu
+	-- nm-applet removed: wayle [modules.network] owns the wifi indicator
+	-- hl.exec_cmd("nm-applet --indicator")
+	-- hl.exec_cmd("nm-tray") -- For ubuntu
 	hl.exec_cmd("swaync")
 	-- hl.exec_cmd("ags")
 	-- hl.exec_cmd("rog-control-center")
@@ -49,9 +50,9 @@ hl.on("hyprland.start", function()
 	-- xdg-desktop-portal-hyprland (should auto start, but you can force it)
 	-- hl.exec_cmd(scriptsDir .. "/PortalHyprland.sh")
 
-	hl.exec_cmd("blueman-applet")
+	-- blueman-applet removed: wayle [modules.bluetooth] owns the bt indicator
+	-- hl.exec_cmd("blueman-applet")
 	hl.exec_cmd("qs -c overview") -- Quickshell Overview
-	hl.exec_cmd(scriptsDir .. "/KeybindsLayoutInit.sh")
 end)
 
 -- ponytail: only referenced by the commented-out wallpaper lines above.

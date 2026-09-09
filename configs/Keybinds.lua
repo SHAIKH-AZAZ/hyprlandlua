@@ -113,8 +113,22 @@ bind(mainMod .. " + SHIFT + SPACE", function()
 	hl.dispatch(hl.dsp.window.center())
 end, "Floating popup center")
 
--- There is no dedicated workspace-option dispatcher in the current Lua API.
-bind(mainMod .. " + ALT + SPACE", exec("hyprctl dispatch workspaceopt allfloat"), "Float all windows")
+-- There is no workspaceopt dispatcher in the Lua API, and `hyprctl dispatch` now
+-- evaluates lua, so the old command form silently errored. Float every window on
+-- the active workspace instead: any tiled window -> float all, otherwise unfloat all.
+bind(mainMod .. " + ALT + SPACE", function()
+	local windows = hl.get_workspace_windows(hl.get_active_workspace())
+	local action = "disable"
+	for _, w in ipairs(windows) do
+		if not w.floating then
+			action = "enable"
+			break
+		end
+	end
+	for _, w in ipairs(windows) do
+		hl.dispatch(hl.dsp.window.float({ action = action, window = "address:" .. w.address }))
+	end
+end, "Float all windows")
 
 bind(mainMod .. " + SHIFT + Return", exec(scriptsDir .. "/Dropterminal.sh " .. term), "DropDown terminal")
 

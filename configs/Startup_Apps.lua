@@ -18,6 +18,9 @@ hl.on("hyprland.start", function()
 	-- hl.exec_cmd(swwwRandom .. " " .. wallDIR)
 
 	-- /* ---- 🚀 Startup 🚀 */
+	-- hyprpm plugins are not auto-loaded at boot; without this the
+	-- plugin:hyprexpo:* keys in plugins/scrolloverview.lua error out.
+	hl.exec_cmd("hyprpm reload -n")
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd(scriptsDir .. "/Dropterminal.sh kitty &")

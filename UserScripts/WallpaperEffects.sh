@@ -6,6 +6,7 @@
 terminal=kitty
 wallpaper_current="$HOME/.config/hypr/wallpaper_effects/.wallpaper_current"
 wallpaper_output="$HOME/.config/hypr/wallpaper_effects/.wallpaper_modified"
+effect_state="$HOME/.config/hypr/wallpaper_effects/.last_effect"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 focused_monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
 rofi_theme="$HOME/.config/rofi/config-wallpaper-effect.rasi"
@@ -45,17 +46,15 @@ declare -A effects=(
 
 # Function to apply no effects
 no-effects() {
-    awww img -o "$focused_monitor" "$wallpaper_current" $SWWW_PARAMS &&
-    wait $!
-    wallust run "$wallpaper_current" -s &&
-    wait $!
-    # Refresh rofi, wayle, wallust palettes
-	sleep 2
-	"$SCRIPTSDIR/Refresh.sh"
+    awww img -o "$focused_monitor" "$wallpaper_current" $SWWW_PARAMS
+    wallust run "$wallpaper_current" -s
+    # Refresh rofi, wayle, wallust palettes (runs after wallust writes its files, no sleep needed)
+    "$SCRIPTSDIR/Refresh.sh"
 
     notify-send -u low -i "$iDIR/ja.png" "No wallpaper" "effects applied"
     # copying wallpaper for rofi menu
     cp "$wallpaper_current" "$wallpaper_output"
+    : > "$effect_state"
 }
 
 # Function to run rofi menu
@@ -75,21 +74,24 @@ main() {
         elif [[ "${effects[$choice]+exists}" ]]; then
             # Apply selected effect
             notify-send -u normal -i "$iDIR/ja.png"  "Applying:" "$choice effects"
-            eval "${effects[$choice]}"
-            
+
+            # skip the magick pass if this effect was already computed for the current source wallpaper
+            src_mtime=$(stat -c %Y "$wallpaper_current" 2>/dev/null)
+            if [[ -f "$wallpaper_output" && "$(cat "$effect_state" 2>/dev/null)" == "$choice:$src_mtime" ]]; then
+                :
+            else
+                eval "${effects[$choice]}"
+                echo "$choice:$src_mtime" > "$effect_state"
+            fi
+
             # intial kill process
             for pid in swaybg mpvpaper; do
-            killall -SIGUSR1 "$pid"
+            killall -SIGUSR1 "$pid" 2>/dev/null
             done
 
-            sleep 1
-            awww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS &
-
-            sleep 2
-  
-            wallust run "$wallpaper_output" -s &
-            sleep 1
-            # Refresh rofi, wayle, wallust palettes
+            awww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS
+            wallust run "$wallpaper_output" -s
+            # Refresh rofi, wayle, wallust palettes (runs after wallust writes its files, no sleep needed)
             "${SCRIPTSDIR}/Refresh.sh"
             notify-send -u low -i "$iDIR/ja.png" "$choice" "effects applied"
         else
@@ -104,5 +106,3 @@ if pidof rofi > /dev/null; then
 fi
 
 main
-
-sleep 1

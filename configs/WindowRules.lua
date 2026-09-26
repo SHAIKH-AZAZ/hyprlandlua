@@ -108,7 +108,7 @@ window_rule({
     tag = "+projects",
 })
 window_rule({
-    match = { class = "^(VSCode|code|code-url-handler)$" },
+    match = { class = "^(VSCode|code|code-url-handler|com.microsoft.VSCode)$" },
     tag = "+projects",
 })
 window_rule({

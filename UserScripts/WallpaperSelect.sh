@@ -187,6 +187,13 @@ main() {
     exit 1
   fi
 
+  apply_selected "$selected_file"
+}
+
+# Apply a wallpaper file (video or image): shared by the rofi menu and the quickshell picker
+apply_selected() {
+  local selected_file="$1"
+
   # Modify the Startup_Apps.conf file based on wallpaper type
   modify_startup_config "$selected_file"
 
@@ -197,6 +204,13 @@ main() {
     apply_image_wallpaper "$selected_file"
   fi
 }
+
+# Non-interactive: WallpaperSelect.sh --apply /path/to/file  (used by the quickshell picker)
+if [[ "$1" == "--apply" ]]; then
+  [[ -f "$2" ]] || exit 1
+  apply_selected "$2"
+  exit 0
+fi
 
 # Check if rofi is already running
 if pidof rofi >/dev/null; then

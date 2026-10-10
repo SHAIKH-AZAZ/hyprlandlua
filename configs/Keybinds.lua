@@ -109,6 +109,9 @@ bind(mainMod .. " + CTRL + F", hl.dsp.window.fullscreen({ mode = "maximized" }),
 
 bind(mainMod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }), "Float current window")
 
+-- Float + center at 74% x 75% of the monitor (toggles back to tiled when already floating).
+bind(mainMod .. " + ALT + Return", exec(scriptsDir .. "/FloatCenter.sh"), "Float window centered (large)")
+
 bind(mainMod .. " + SHIFT + SPACE", function()
 	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
 	hl.dispatch(hl.dsp.window.resize({ x = 900, y = 600, relative = false }))
@@ -175,7 +178,7 @@ bind(mainMod .. " + N", exec(scriptsDir .. "/Hyprsunset.sh toggle"), "toggle nig
 
 bind(mainMod .. " + SHIFT + M", exec(userScripts .. "/RofiBeats.sh"), "online music")
 
-bind(mainMod .. " + W", exec(userScripts .. "/WallpaperSelect.sh"), "select wallpaper")
+bind(mainMod .. " + W", exec("qs -p " .. home .. "/.config/quickshell/bar ipc call wallpaper toggle"), "select wallpaper")
 
 bind(mainMod .. " + SHIFT + W", exec(userScripts .. "/WallpaperEffects.sh"), "wallpaper effects")
 

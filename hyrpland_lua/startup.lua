@@ -21,7 +21,7 @@ return {
   h.exec_once("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"),
   h.exec_once("$HOME/.config/hypr/scripts/Dropterminal.sh kitty &"),
   h.exec_once("$scriptsDir/Polkit.sh"),
-  -- nm-applet removed: wayle [modules.network] owns the wifi indicator
+  -- nm-applet removed: the quickshell bar owns the wifi indicator
   -- h.exec_once("nm-applet --indicator"),
   -- h.exec_once("nm-tray"),
   h.exec_once("swaync"),
@@ -36,6 +36,6 @@ return {
   h.exec_once("wl-paste --type image --watch cliphist store"),
 
   h.blank(),
-  -- blueman-applet removed: wayle [modules.bluetooth] owns the bt indicator
+  -- blueman-applet removed: the quickshell bar owns the bt indicator
   -- h.exec_once("blueman-applet"),
 }

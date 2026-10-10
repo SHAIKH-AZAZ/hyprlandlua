@@ -13,7 +13,7 @@ hl.env("DOTS_VERSION", "2.3.20")
 
 -- /* ---- 🧰 Toolkit Backend Variables 🧰 */
 hl.env("GDK_BACKEND", "wayland,x11,*")
-hl.env("QT_QPA_PLATFORM", "wayland,xcb")
+hl.env("QT_QPA_PLATFORM", "wayland")
 hl.env("CLUTTER_BACKEND", "wayland")
 
 -- Run SDL2 applications on Wayland.

@@ -148,10 +148,4 @@ fi
 # Kitty reloads kitty.conf (and its wallust include) on SIGUSR1
 for pid in $(pidof kitty); do kill -SIGUSR1 "$pid" 2>/dev/null || true; done
 
-# Tell wayle the new wallpaper so it re-extracts bar colors
-# (styling.theme-provider = "wallust", wallpaper.engine-enabled = false: awww still draws it)
-# Extraction is async; wait for it so a following Refresh.sh `wayle panel restart` can't kill it.
-# ponytail: same wallpaper re-picked = no rewrite, so this just times out after 5s
-if wayle wallpaper set "$wallpaper_path" >/dev/null 2>&1; then
-  wait_for_templates "$start_ts" "$HOME/.cache/wayle/wallust-colors.json" || true
-fi
+# quickshell bar picks up the new palette itself (wallust writes qml_color.json)

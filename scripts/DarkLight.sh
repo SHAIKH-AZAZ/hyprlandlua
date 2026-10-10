@@ -73,31 +73,11 @@ else
     sed -i 's/^palette = .*/palette = "'"$pallete_light"'"/' "$wallust_config" 
 fi
 
-# Function to set Wayle palette
-# NOTE: `wayle config set` is a no-op in 0.7.0 (reports success, writes nothing),
-# so the palette is swapped by symlink the same way waybar styles used to be.
-set_wayle_palette() {
-    theme="$1"
-    palettes="$HOME/.config/wayle/palettes"
-    case "$theme" in
-        Dark) target="mocha.toml" ;;
-        *)    target="latte.toml" ;;
-    esac
-
-    if [ -f "$palettes/$target" ]; then
-        ln -sf "$target" "$palettes/active.toml"
-        wayle panel restart >/dev/null 2>&1 || true
-    else
-        echo "Wayle palette not found: $palettes/$target"
-    fi
-}
-
-# Call the function after determining the mode
-set_wayle_palette "$next_mode"
+# Bar colors follow wallust (palette toggled above), nothing else to switch.
 notify_user "$next_mode"
 
 
-# swaync colors: removed, wayle draws notifications from its own palette
+# notifications are drawn by the quickshell bar from the wallust palette
 
 # ags color change
 if command -v ags >/dev/null 2>&1; then    

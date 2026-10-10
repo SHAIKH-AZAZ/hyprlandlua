@@ -120,8 +120,6 @@ if wallust theme -- "${choice}"; then
   # Refresh bars/menus after files are ready
   if [ -x "$HOME/.config/hypr/scripts/Refresh.sh" ]; then
     "$HOME/.config/hypr/scripts/Refresh.sh" >/dev/null 2>&1 || true
-  else
-    wayle panel restart >/dev/null 2>&1 || true
   fi
 
   # Ask kitty to reload its config so the new 01-Wallust.conf is picked up

@@ -25,13 +25,14 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	hl.exec_cmd(scriptsDir .. "/Dropterminal.sh kitty &")
 	hl.exec_cmd(scriptsDir .. "/Polkit.sh")
-	-- nm-applet removed: wayle [modules.network] owns the wifi indicator
+	-- nm-applet removed: the quickshell bar owns the wifi indicator
 	-- hl.exec_cmd("nm-applet --indicator")
 	-- hl.exec_cmd("nm-tray") -- For ubuntu
-	hl.exec_cmd("swaync")
+	-- swaync disabled: quickshell bar owns org.freedesktop.Notifications (only one owner allowed)
+	-- hl.exec_cmd("swaync")
 	-- hl.exec_cmd("ags")
 	-- hl.exec_cmd("rog-control-center")
-	hl.exec_cmd("wayle panel start")
+	hl.exec_cmd("qs -p /home/azaz/.config/quickshell/bar") -- quickshell bar + notifications + launcher
 	hl.exec_cmd("qs -c overview") -- Quickshell Overview
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd(scriptsDir .. "/Hyprsunset.sh init")
@@ -53,7 +54,7 @@ hl.on("hyprland.start", function()
 	-- xdg-desktop-portal-hyprland (should auto start, but you can force it)
 	-- hl.exec_cmd(scriptsDir .. "/PortalHyprland.sh")
 
-	-- blueman-applet removed: wayle [modules.bluetooth] owns the bt indicator
+	-- blueman-applet removed: the quickshell bar owns the bt indicator
 	-- hl.exec_cmd("blueman-applet")
 	hl.exec_cmd("qs -c overview") -- Quickshell Overview
 end)

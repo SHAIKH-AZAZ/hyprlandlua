@@ -25,7 +25,7 @@ notify_cmd_NOT="notify-send -u low -i ${iDoR}/note.png "
 notify_view() {
     if [[ "$1" == "active" ]]; then
         if [[ -e "${active_window_path}" ]]; then
-			"${sDIR}/Sounds.sh" --screenshot        
+			"${sDIR}/Sounds.sh" --screenshot &
             resp=$(timeout 5 ${notify_cmd_shot_win} " Screenshot of:" " ${active_window_class} Saved.")
             case "$resp" in
 				action1)
@@ -41,7 +41,7 @@ notify_view() {
         fi
 
     elif [[ "$1" == "swappy" ]]; then
-		"${sDIR}/Sounds.sh" --screenshot
+		"${sDIR}/Sounds.sh" --screenshot &
 		resp=$(${notify_cmd_shot} " Screenshot:" " Captured by Swappy")
 		case "$resp" in
 			action1)
@@ -55,7 +55,7 @@ notify_view() {
     else
         local check_file="${dir}/${file}"
         if [[ -e "$check_file" ]]; then
-            "${sDIR}/Sounds.sh" --screenshot
+            "${sDIR}/Sounds.sh" --screenshot &
             resp=$(timeout 5 ${notify_cmd_shot} " Screenshot" " Saved")
 			case "$resp" in
 				action1)
@@ -82,8 +82,8 @@ countdown() {
 
 # take shots
 shotnow() {
-	cd ${dir} && grim - | tee "$file" | wl-copy
-	sleep 2
+	# -l 1: fast PNG compression (default 6 is the slow part); no sleep, the pipe has finished
+	cd ${dir} && grim -l 1 - | tee "$file" | wl-copy
 	notify_view
 }
 
@@ -109,7 +109,7 @@ shotwin() {
 
 shotarea() {
 	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile"
+	grim -l 1 -g "$(slurp)" - >"$tmpfile"
 
   # Copy with saving
 	if [[ -s "$tmpfile" ]]; then
@@ -124,14 +124,13 @@ shotactive() {
     active_window_file="Screenshot_${time}_${active_window_class}.png"
     active_window_path="${dir}/${active_window_file}"
 
-    hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - "${active_window_path}"
-	sleep 1
+    hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -l 1 -g - "${active_window_path}"
     notify_view "active"
 }
 
 shotswappy() {
 	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile" 
+	grim -l 1 -g "$(slurp)" - >"$tmpfile" 
 
   # Copy without saving
   if [[ -s "$tmpfile" ]]; then

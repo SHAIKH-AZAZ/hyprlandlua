@@ -35,7 +35,7 @@ while true; do
 		-print0 \
 		| shuf -z \
 		| while IFS= read -r -d '' img; do
-			awww img -o "$focused_monitor" "$img"
+			"$HOME/.config/hypr/scripts/WallpaperSet.sh" "$img" "$focused_monitor"
 			# Regenerate colors from the exact image path to avoid cache races
 				$HOME/.config/hypr/scripts/WallustSwww.sh "$img"
 				# Refresh UI components that depend on wallust output

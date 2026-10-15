@@ -137,7 +137,12 @@ apply_image_wallpaper() {
     sleep 0.2
   fi
 
-  awww img -o "$focused_monitor" "$image_path" $SWWW_PARAMS
+  # QS_WALL_FX=1: the quickshell picker draws its own dissolve, so awww must switch instantly
+  if [[ -n "$QS_WALL_FX" ]]; then
+    awww img -o "$focused_monitor" "$image_path" --transition-type none
+  else
+    awww img -o "$focused_monitor" "$image_path" $SWWW_PARAMS
+  fi
 
   # Run additional scripts (pass the image path to avoid cache race conditions)
   "$SCRIPTSDIR/WallustSwww.sh" "$image_path"

@@ -115,7 +115,7 @@ else
 fi
 
 # Update wallpaper using awww command
-$awww "${next_wallpaper}" $effect
+"$HOME/.config/hypr/scripts/WallpaperSet.sh" "${next_wallpaper}" "" $effect   # dissolve via the bar; plain awww (grow) when it is not running
 
 
 # Set Kvantum Manager theme & QT5/QT6 settings

@@ -46,7 +46,7 @@ declare -A effects=(
 
 # Function to apply no effects
 no-effects() {
-    awww img -o "$focused_monitor" "$wallpaper_current" $SWWW_PARAMS
+    "$HOME/.config/hypr/scripts/WallpaperSet.sh" "$wallpaper_current" "$focused_monitor" $SWWW_PARAMS
     wallust run "$wallpaper_current" -s
     # Refresh rofi, wayle, wallust palettes (runs after wallust writes its files, no sleep needed)
     "$SCRIPTSDIR/Refresh.sh"
@@ -89,7 +89,7 @@ main() {
             killall -SIGUSR1 "$pid" 2>/dev/null
             done
 
-            awww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS
+            "$HOME/.config/hypr/scripts/WallpaperSet.sh" "$wallpaper_output" "$focused_monitor" $SWWW_PARAMS
             wallust run "$wallpaper_output" -s
             # Refresh rofi, wayle, wallust palettes (runs after wallust writes its files, no sleep needed)
             "${SCRIPTSDIR}/Refresh.sh"

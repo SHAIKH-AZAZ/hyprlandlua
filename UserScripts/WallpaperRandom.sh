@@ -30,7 +30,7 @@ if ! awww query >/dev/null 2>&1; then
   sleep 0.2
 fi
 
-awww img -o "$focused_monitor" "$RANDOMPICS" "${SWWW_PARAMS[@]}"
+"$HOME/.config/hypr/scripts/WallpaperSet.sh" "$RANDOMPICS" "$focused_monitor" "${SWWW_PARAMS[@]}"
 "$SCRIPTSDIR/WallustSwww.sh" "$RANDOMPICS"
 
 sleep 2
